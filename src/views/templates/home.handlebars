@@ -1,0 +1,15 @@
+{{!-- lo que escribo aca va hacer lo que quiero que se modifique entre el nav y el footer --}}
+<h1>render main</h1>
+
+{{#if mostrarProductos}}
+    {{#each productos}} {{!-- uso each par recorer el array y poder ver todos los prductos --}}
+        <div>
+            <p>titulo: {{this.title}}</p>
+            <p>descripcion: {{this.description}}</p>
+            <p>$: {{this.price}}</p>
+            <img src={{this.img}} alt="bokita">
+        </div>
+    {{/each}}
+{{else}}
+    <p>no se puede motrasr los productos</p>
+{{/if}}
