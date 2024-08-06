@@ -1,3 +1,15 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body{
-    background-color: mediumaquamarine;
+    background-color: rgb(72, 72, 72);
+}
+
+a{
+    color: black;
+    align-items: center;
+    text-decoration: none;
 }

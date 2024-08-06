@@ -5,13 +5,19 @@
   "type": "module",
   "module": "module",
   "scripts": {
-    "devNodemon": "nodemon src/index.js"
+    "devNodemon": "nodemon src/index.js",
+    "testMocha": "mocha test/User.test.js",
+    "testChai": "mocha test/UserChai.test.js",
+    "test": "mocha test/supertest.test.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^3.0.3"
+    "chai": "^5.1.1",
+    "mocha": "^10.6.0",
+    "nodemon": "^3.0.3",
+    "supertest": "^7.0.0"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",

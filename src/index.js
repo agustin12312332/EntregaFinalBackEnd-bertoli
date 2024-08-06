@@ -1,6 +1,6 @@
 import dotenv from 'dotenv'
 import express from 'express'
-import  mongoose from 'mongoose'
+import mongoose, { get } from 'mongoose'
 import session from 'express-session'
 import MongoStore from 'connect-mongo'
 import passport from 'passport'
@@ -11,6 +11,7 @@ import initializePassport from './config/passport/passport.js'
 import { Server } from 'socket.io'
 import { engine } from 'express-handlebars'
 import { __dirname } from './path.js'
+import {getProducts } from './controllers/productControler.js'
 
 const app = express()
 const PORT = 8080
@@ -22,7 +23,7 @@ const server = app.listen(PORT, () => {
     console.log(`Server on port ${PORT}`)
 })
 
-const io = new Server (server)
+// const io = new Server (server)
 
 
 // conction DB
@@ -45,7 +46,14 @@ app.use(session({
 app.use(cookieParser("claveSecreta"))     //(process.env.COOKIE_SECRET)
 app.engine('handlebars', engine()) // confirguro para usar handlebars
 app.set('view engine', 'handlebars')// confirguro para usar handlebars
-app.set('views', __dirname + '/views')// aca digo donde se esta usando
+app.set('views', __dirname + '/views')// aca digo donde se esta usando 
+
+app.get("/", async (req,res) => {
+    res.render("./templates/home", {
+        title: "Non forsit",
+        products : getProducts,
+    })
+})
 
 initializePassport()
 app.use(passport.initialize())
@@ -54,6 +62,8 @@ app.use(passport.session())
 
 //Routes
 app.use('/', indexRouter)
+
+
 
 //Routes Cookies
 app.get('/setCookie', (req, res) => {
@@ -95,16 +105,16 @@ app.get('/login', (req, res) => {
 
 
 
-io.on('connection', async(socket)=>{
-    console.log("conecion con socket.io")
+// io.on('connection', async(socket)=>{
+//     console.log("conecion con socket.io")
 
-    socket.on('mensaje',async (mensaje) =>{
-        try {
-            await messageModel.create(mensaje)
-            const mensajes = await messageModel.find()
-            io.emit('mensajeLogs', mensajes)
-        } catch (e) {
-            io.emit('mensajeLogs', e)
-        }
-    })
-})
+//     socket.on('mensaje',async (mensaje) =>{
+//         try {
+//             await messageModel.create(mensaje)
+//             const mensajes = await messageModel.find()
+//             io.emit('mensajeLogs', mensajes)
+//         } catch (e) {
+//             io.emit('mensajeLogs', e)
+//         }
+//     })
+// })
